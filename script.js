@@ -40,24 +40,15 @@ function readExcel(file) {
   });
 }
 
-// Hàm đọc file SQL và chuyển đổi theo mapping
+// Hàm đọc file SQL và hiển thị nội dung
 function readSqlFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = function (e) {
-      let sqlContent = e.target.result;
+      const sqlContent = e.target.result;
 
       // Hiển thị nội dung SQL ban đầu
       document.getElementById("uatSql").textContent = sqlContent;
-
-      // Thay thế bảng UAT bằng bảng PROD dựa trên mapping
-      for (const [uatTable, prodTable] of Object.entries(tableMapping)) {
-        const regex = new RegExp(uatTable, 'g'); // Sử dụng regex để thay thế toàn bộ
-        sqlContent = sqlContent.replace(regex, prodTable);
-      }
-
-      // Hiển thị nội dung SQL sau khi chuyển đổi
-      document.getElementById("prodSql").textContent = sqlContent;
 
       resolve(sqlContent);
     };
@@ -66,22 +57,44 @@ function readSqlFile(file) {
   });
 }
 
+// Xử lý khi chọn file Excel
+document.getElementById('excelFile').addEventListener('change', function () {
+  const excelFile = this.files[0];
+  if (excelFile) {
+    readExcel(excelFile);
+  }
+});
+
+// Xử lý khi chọn file SQL
+document.getElementById('sqlFile').addEventListener('change', function () {
+  const sqlFile = this.files[0];
+  if (sqlFile) {
+    readSqlFile(sqlFile);
+  }
+});
+
 // Hàm xử lý khi người dùng nhấn "Chuyển đổi"
 async function processFiles() {
-  const excelFile = document.getElementById('excelFile').files[0];
   const sqlFile = document.getElementById('sqlFile').files[0];
 
-  if (!excelFile || !sqlFile) {
-    alert("Vui lòng chọn cả file Excel và file SQL.");
+  if (!sqlFile) {
+    alert("Vui lòng chọn file SQL.");
     return;
   }
 
   try {
-    // Bước 1: Đọc và tạo bảng mapping từ Excel
-    await readExcel(excelFile);
-
     // Bước 2: Đọc file SQL và thay thế theo mapping
-    const convertedSql = await readSqlFile(sqlFile);
+    const convertedSql = await readSqlFile(sqlFile).then(sqlContent => {
+      // Thay thế bảng UAT bằng bảng PROD dựa trên mapping
+      for (const [uatTable, prodTable] of Object.entries(tableMapping)) {
+        const regex = new RegExp(uatTable, 'g'); // Sử dụng regex để thay thế toàn bộ
+        sqlContent = sqlContent.replace(regex, prodTable);
+      }
+      return sqlContent;
+    });
+
+    // Hiển thị nội dung SQL sau khi chuyển đổi
+    document.getElementById("prodSql").textContent = convertedSql;
 
     // Bước 3: Tải xuống file SQL đã chuyển đổi
     downloadFile(convertedSql, "script_prod.txt");
