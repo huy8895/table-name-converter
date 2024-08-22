@@ -4,18 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UAT to PROD SQL Converter</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- SheetJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <style>
+    body {
+      padding: 20px;
+    }
+    #outputTables, #uatSql, #prodSql {
+      white-space: pre-wrap;
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #dee2e6;
+    }
+  </style>
 </head>
 <body>
-<h1>UAT to PROD SQL Converter</h1>
+<div class="container">
+  <h1 class="mb-4">UAT to PROD SQL Converter</h1>
 
-<label for="excelFile">Chọn file Excel (mapping):</label>
-<input type="file" id="excelFile" accept=".xlsx"><br><br>
+  <div class="form-group">
+    <label for="excelFile">Chọn file Excel (mapping):</label>
+    <input type="file" id="excelFile" class="form-control-file" accept=".xlsx">
+  </div>
 
-<label for="sqlFile">Chọn file SQL (uat_sql.txt):</label>
-<input type="file" id="sqlFile" accept=".txt"><br><br>
+  <div class="form-group">
+    <label for="sqlFile">Chọn file SQL (uat_sql.txt):</label>
+    <input type="file" id="sqlFile" class="form-control-file" accept=".txt">
+  </div>
 
-<button onclick="processFiles()">Chuyển đổi</button>
+  <button class="btn btn-primary mb-4" onclick="processFiles()">Chuyển đổi</button>
+
+  <!-- Hiển thị nội dung của file Excel -->
+  <h3>Data từ Excel (Mapping):</h3>
+  <table class="table table-bordered" id="mappingTable">
+    <thead>
+    <tr>
+      <th>UAT Table</th>
+      <th>PROD Table</th>
+    </tr>
+    </thead>
+    <tbody id="outputTables">
+    <!-- Nội dung sẽ được thêm vào đây -->
+    </tbody>
+  </table>
+
+  <!-- Hiển thị nội dung của file SQL -->
+  <h3>Nội dung file UAT SQL:</h3>
+  <div id="uatSql"></div>
+
+  <!-- Hiển thị nội dung của file PROD SQL sau chuyển đổi -->
+  <h3>Nội dung file PROD SQL (sau khi chuyển đổi):</h3>
+  <div id="prodSql"></div>
+</div>
 
 <script>
   let tableMapping = {};
@@ -31,12 +77,25 @@
         const sheet = workbook.Sheets[sheetName];
         const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-        // Tạo mapping từ cột db uat sang db prod
+        const outputTables = document.getElementById("outputTables");
+        outputTables.innerHTML = "";
+
+        // Tạo mapping từ cột db uat sang db prod và hiển thị dữ liệu
         rows.forEach(row => {
           const uatTable = row[0];
           const prodTable = row[1];
           if (uatTable && prodTable) {
             tableMapping[uatTable] = prodTable;
+
+            // Thêm dữ liệu vào bảng hiển thị
+            const tr = document.createElement("tr");
+            const tdUat = document.createElement("td");
+            const tdProd = document.createElement("td");
+            tdUat.textContent = uatTable;
+            tdProd.textContent = prodTable;
+            tr.appendChild(tdUat);
+            tr.appendChild(tdProd);
+            outputTables.appendChild(tr);
           }
         });
 
@@ -54,11 +113,17 @@
       reader.onload = function (e) {
         let sqlContent = e.target.result;
 
+        // Hiển thị nội dung SQL ban đầu
+        document.getElementById("uatSql").textContent = sqlContent;
+
         // Thay thế bảng UAT bằng bảng PROD dựa trên mapping
         for (const [uatTable, prodTable] of Object.entries(tableMapping)) {
           const regex = new RegExp(uatTable, 'g'); // Sử dụng regex để thay thế toàn bộ
           sqlContent = sqlContent.replace(regex, prodTable);
         }
+
+        // Hiển thị nội dung SQL sau khi chuyển đổi
+        document.getElementById("prodSql").textContent = sqlContent;
 
         resolve(sqlContent);
       };
