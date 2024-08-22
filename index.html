@@ -27,31 +27,51 @@
 
   <button class="btn btn-primary mb-4" onclick="processFiles()">Chuyển đổi</button>
 
-  <!-- Hiển thị nội dung của file Excel -->
-  <h3>Data từ Excel (Mapping):</h3>
-  <table class="table table-bordered" id="mappingTable">
-    <thead>
-    <tr>
-      <th>UAT Table</th>
-      <th>PROD Table</th>
-    </tr>
-    </thead>
-    <tbody id="outputTables">
-    <!-- Nội dung sẽ được thêm vào đây -->
-    </tbody>
-  </table>
+  <!-- Collapse for Excel Mapping -->
+  <h3>
+    <a class="btn btn-link" data-toggle="collapse" href="#mappingCollapse" role="button" aria-expanded="false" aria-controls="mappingCollapse">
+      Data từ Excel (Mapping)
+    </a>
+  </h3>
+  <div class="collapse" id="mappingCollapse">
+    <table class="table table-bordered" id="mappingTable">
+      <thead>
+      <tr>
+        <th>UAT Table</th>
+        <th>PROD Table</th>
+      </tr>
+      </thead>
+      <tbody id="outputTables">
+      <!-- Nội dung sẽ được thêm vào đây -->
+      </tbody>
+    </table>
+  </div>
 
-  <!-- Hiển thị nội dung của file SQL -->
-  <h3>Nội dung file UAT SQL:</h3>
-  <div id="uatSql"></div>
+  <!-- Collapse for UAT SQL Content -->
+  <h3>
+    <a class="btn btn-link" data-toggle="collapse" href="#uatSqlCollapse" role="button" aria-expanded="false" aria-controls="uatSqlCollapse">
+      Nội dung file UAT SQL
+    </a>
+  </h3>
+  <div class="collapse" id="uatSqlCollapse">
+    <div id="uatSql"></div>
+  </div>
 
-  <!-- Hiển thị nội dung của file PROD SQL sau chuyển đổi -->
-  <h3>Nội dung file PROD SQL (sau khi chuyển đổi):</h3>
-  <div id="prodSql"></div>
+  <!-- Collapse for PROD SQL Content -->
+  <h3>
+    <a class="btn btn-link" data-toggle="collapse" href="#prodSqlCollapse" role="button" aria-expanded="false" aria-controls="prodSqlCollapse">
+      Nội dung file PROD SQL (sau khi chuyển đổi)
+    </a>
+  </h3>
+  <div class="collapse" id="prodSqlCollapse">
+    <div id="prodSql"></div>
+  </div>
 </div>
 
 <!-- Include JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
