@@ -6,10 +6,10 @@ function readExcel(file) {
     const reader = new FileReader();
     reader.onload = function (e) {
       const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: 'array' });
+      const workbook = XLSX.read(data, {type: 'array'});
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
 
       const outputTables = document.getElementById("outputTables");
       outputTables.innerHTML = "";
@@ -74,6 +74,8 @@ document.getElementById('sqlFile').addEventListener('change', function () {
 });
 
 // Hàm xử lý khi người dùng nhấn "Chuyển đổi"
+const TABLE_PREFIX = 'BPM_CDC_';
+
 async function processFiles() {
   const sqlFile = document.getElementById('sqlFile').files[0];
 
@@ -87,8 +89,8 @@ async function processFiles() {
     const convertedSql = await readSqlFile(sqlFile).then(sqlContent => {
       // Thay thế bảng UAT bằng bảng PROD dựa trên mapping
       for (const [uatTable, prodTable] of Object.entries(tableMapping)) {
-        const regex = new RegExp(uatTable, 'g'); // Sử dụng regex để thay thế toàn bộ
-        sqlContent = sqlContent.replace(regex, prodTable);
+        const regex = new RegExp(TABLE_PREFIX + uatTable, 'g'); // Sử dụng regex để thay thế toàn bộ
+        sqlContent = sqlContent.replace(regex, TABLE_PREFIX + prodTable);
       }
       return sqlContent;
     });
@@ -105,7 +107,7 @@ async function processFiles() {
 
 // Hàm tải xuống file
 function downloadFile(content, fileName) {
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const blob = new Blob([content], {type: "text/plain;charset=utf-8"});
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = fileName;
