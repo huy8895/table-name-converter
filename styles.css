@@ -9,3 +9,12 @@ body {
   border-radius: 5px;
   border: 1px solid #dee2e6;
 }
+
+Thêm style cho textarea
+#sqlInput, #uatSqlInput, #prodSqlInput {
+  width: 100%;
+  min-height: 50px;
+  font-family: monospace;
+  padding: 10px;
+  margin: 10px 0;
+}

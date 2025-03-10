@@ -17,16 +17,10 @@
   <h1 class="mb-4">UAT to PROD SQL Converter</h1>
 
   <div class="form-group">
-    <label for="excelFile">Chọn file Excel (mapping):</label>
-    <input type="file" id="excelFile" class="form-control-file" accept=".xlsx">
+    <!-- Xóa phần chọn file Excel -->
+    <!-- <input type="file" id="excelFile" accept=".xlsx" hidden> -->
+    <!-- <button id="excelBtn" class="btn btn-primary">Chọn File Excel Mapping</button> -->
   </div>
-
-  <div class="form-group">
-    <label for="sqlFile">Chọn file SQL (uat_sql.txt):</label>
-    <input type="file" id="sqlFile" class="form-control-file" accept=".txt">
-  </div>
-
-  <button class="btn btn-primary mb-4" onclick="processFiles()">Chuyển đổi</button>
 
   <button onclick="processProdToUat()" class="btn btn-primary mt-3">Chuyển đổi PROD sang UAT</button>
 
@@ -35,6 +29,11 @@
   <textarea id="prodSqlInput" rows="10" class="form-control mt-3" placeholder="Nhập script SQL PROD ở đây"></textarea>
 
   <textarea id="uatSqlInput" rows="10" class="form-control mt-3" placeholder="Nhập script SQL UAT ở đây"></textarea>
+
+  <!-- Thêm thông báo về mapping -->
+  <div class="alert alert-info mt-3">
+    Dữ liệu mapping được load từ file <strong>mapping.json</strong>
+  </div>
 
   <!-- Collapse for Excel Mapping -->
   <h3>

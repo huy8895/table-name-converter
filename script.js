@@ -1,109 +1,31 @@
+// Thêm các hằng số đầu file
 let tableMapping = {};
 
-// Hàm đọc file Excel và tạo bảng mapping
-function readExcel(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, {type: 'array'});
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
-
-      const outputTables = document.getElementById("outputTables");
-      outputTables.innerHTML = "";
-
-      // Tạo mapping từ cột db uat sang db prod và hiển thị dữ liệu
-      rows.forEach(row => {
-        const uatTable = row[0];
-        const prodTable = row[1];
-        if (uatTable && prodTable) {
-          tableMapping[uatTable] = prodTable;
-
-          // Thêm dữ liệu vào bảng hiển thị
-          const tr = document.createElement("tr");
-          const tdUat = document.createElement("td");
-          const tdProd = document.createElement("td");
-          tdUat.textContent = uatTable;
-          tdProd.textContent = prodTable;
-          tr.appendChild(tdUat);
-          tr.appendChild(tdProd);
-          outputTables.appendChild(tr);
-        }
-      });
-
-      resolve();
-    };
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
-}
-
-// Hàm đọc file SQL và hiển thị nội dung
-function readSqlFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const sqlContent = e.target.result;
-
-      // Hiển thị nội dung SQL ban đầu
-      document.getElementById("uatSql").textContent = sqlContent;
-
-      resolve(sqlContent);
-    };
-    reader.onerror = reject;
-    reader.readAsText(file);
-  });
-}
-
-// Xử lý khi chọn file Excel
-document.getElementById('excelFile').addEventListener('change', function () {
-  const excelFile = this.files[0];
-  if (excelFile) {
-    readExcel(excelFile);
+// Hàm load mapping từ file JSON
+async function loadMapping() {
+  try {
+    const response = await fetch('mapping.json');
+    if (!response.ok) throw new Error('Không tìm thấy file mapping');
+    const data = await response.json();
+    
+    // Chuẩn hóa dữ liệu
+    tableMapping = Object.fromEntries(
+      Object.entries(data).map(([key, value]) => [
+        key,value 
+      ])
+    );
+    
+    renderMappingTable();
+  } catch (error) {
+    console.error('Lỗi khi load mapping:', error);
+    alert('Không thể load dữ liệu mapping. Vui lòng kiểm tra file mapping.json');
   }
-});
-
-// Xử lý khi chọn file SQL
-document.getElementById('sqlFile').addEventListener('change', function () {
-  const sqlFile = this.files[0];
-  if (sqlFile) {
-    readSqlFile(sqlFile);
-  }
-});
+}
 
 // Hàm xử lý khi người dùng nhấn "Chuyển đổi"
 const TABLE_PREFIX = 'BPM_CDC_';
 
-async function processFiles() {
-  const sqlFile = document.getElementById('sqlFile').files[0];
 
-  if (!sqlFile) {
-    alert("Vui lòng chọn file SQL.");
-    return;
-  }
-
-  try {
-    // Bước 2: Đọc file SQL và thay thế theo mapping
-    const convertedSql = await readSqlFile(sqlFile).then(sqlContent => {
-      // Thay thế bảng UAT bằng bảng PROD dựa trên mapping
-      for (const [uatTable, prodTable] of Object.entries(tableMapping)) {
-        const regex = new RegExp(TABLE_PREFIX + uatTable, 'g'); // Sử dụng regex để thay thế toàn bộ
-        sqlContent = sqlContent.replace(regex, TABLE_PREFIX + prodTable);
-      }
-      return sqlContent;
-    });
-
-    // Hiển thị nội dung SQL sau khi chuyển đổi
-    document.getElementById("prodSql").textContent = convertedSql;
-
-    // Bước 3: Tải xuống file SQL đã chuyển đổi
-    downloadFile(convertedSql, "script_prod.txt");
-  } catch (error) {
-    console.error("Đã xảy ra lỗi:", error);
-  }
-}
 
 // Hàm tải xuống file
 function downloadFile(content, fileName) {
@@ -160,44 +82,62 @@ async function processProdToUat() {
 
 // Hàm mới để chuyển đổi SQL từ UAT sang PROD
 function convertUatToProd(sqlContent) {
+  console.log('convertUatToProd', sqlContent)
   for (const [uatTable, prodTable] of Object.entries(tableMapping)) {
+    console.log('uattable: ', uatTable)
     const regex = new RegExp(TABLE_PREFIX + uatTable, 'g');
     sqlContent = sqlContent.replace(regex, TABLE_PREFIX + prodTable);
   }
+  console.log('convertUatToProd end', sqlContent)
+
   return sqlContent;
 }
 
 // Hàm xử lý khi người dùng nhấn "Chuyển đổi UAT sang PROD"
 async function processUatToProd() {
   const uatSqlInput = document.getElementById('uatSqlInput').value;
-  const excelFile = document.getElementById('excelFile').files[0];
 
   if (!uatSqlInput) {
     alert("Vui lòng nhập script SQL UAT.");
     return;
   }
 
-  if (!excelFile) {
-    alert("Vui lòng chọn file Excel mapping.");
-    return;
-  }
-
   try {
-    // Đọc file Excel mapping
-    await readExcel(excelFile);
-
-    // Hiển thị nội dung SQL UAT ban đầu
-    document.getElementById("uatSql").textContent = uatSqlInput;
-
-    // Chuyển đổi SQL từ UAT sang PROD
     const convertedProdSql = convertUatToProd(uatSqlInput);
-
-    // Hiển thị nội dung SQL sau khi chuyển đổi sang PROD
     document.getElementById("prodSql").textContent = convertedProdSql;
-
-    // Tải xuống file SQL đã chuyển đổi
     downloadFile(convertedProdSql, "script_prod.txt");
   } catch (error) {
     console.error("Đã xảy ra lỗi:", error);
   }
 }
+
+
+
+// Hàm hiển thị dữ liệu mapping
+function renderMappingTable() {
+  const outputTables = document.getElementById("outputTables");
+  outputTables.innerHTML = ''; // Xóa nội dung cũ
+
+  // Thêm header
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML = `
+    <th>UAT Table</th>
+    <th>PROD Table</th>
+  `;
+  outputTables.appendChild(headerRow);
+
+  // Thêm dữ liệu
+  Object.entries(tableMapping).forEach(([uat, prod]) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${uat.replace(TABLE_PREFIX, '')}</td>
+      <td>${prod.replace(TABLE_PREFIX, '')}</td>
+    `;
+    outputTables.appendChild(row);
+  });
+}
+
+// Khởi tạo load mapping khi trang web được tải
+window.addEventListener('DOMContentLoaded', () => {
+  loadMapping();
+});
