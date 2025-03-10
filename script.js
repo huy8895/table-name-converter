@@ -157,3 +157,47 @@ async function processProdToUat() {
     console.error("Đã xảy ra lỗi:", error);
   }
 }
+
+// Hàm mới để chuyển đổi SQL từ UAT sang PROD
+function convertUatToProd(sqlContent) {
+  for (const [uatTable, prodTable] of Object.entries(tableMapping)) {
+    const regex = new RegExp(TABLE_PREFIX + uatTable, 'g');
+    sqlContent = sqlContent.replace(regex, TABLE_PREFIX + prodTable);
+  }
+  return sqlContent;
+}
+
+// Hàm xử lý khi người dùng nhấn "Chuyển đổi UAT sang PROD"
+async function processUatToProd() {
+  const uatSqlInput = document.getElementById('uatSqlInput').value;
+  const excelFile = document.getElementById('excelFile').files[0];
+
+  if (!uatSqlInput) {
+    alert("Vui lòng nhập script SQL UAT.");
+    return;
+  }
+
+  if (!excelFile) {
+    alert("Vui lòng chọn file Excel mapping.");
+    return;
+  }
+
+  try {
+    // Đọc file Excel mapping
+    await readExcel(excelFile);
+
+    // Hiển thị nội dung SQL UAT ban đầu
+    document.getElementById("uatSql").textContent = uatSqlInput;
+
+    // Chuyển đổi SQL từ UAT sang PROD
+    const convertedProdSql = convertUatToProd(uatSqlInput);
+
+    // Hiển thị nội dung SQL sau khi chuyển đổi sang PROD
+    document.getElementById("prodSql").textContent = convertedProdSql;
+
+    // Tải xuống file SQL đã chuyển đổi
+    downloadFile(convertedProdSql, "script_prod.txt");
+  } catch (error) {
+    console.error("Đã xảy ra lỗi:", error);
+  }
+}

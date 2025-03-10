@@ -1,0 +1,745 @@
+{
+    "timestamp": "22/10/2024 14:06:14",
+    "status": {
+        "code": "DS200",
+        "message": "Success"
+    },
+    "data": {
+        "data": [
+            {
+                "domainType": "CUSTOMER",
+                "domainObjectId": "9563",
+                "domainObjectName": null,
+                "criteriaSuites": [
+                    {
+                        "suiteCode": "BTC31",
+                        "suiteName": "Điều kiện KH khi tái cấp",
+                        "suiteParentCode": null,
+                        "suiteParentName": null,
+                        "criteriaSuiteType": "V006",
+                        "isAutoEvaluate": true,
+                        "criterias": [
+                            {
+                                "id": 226,
+                                "code": "Q36",
+                                "parentCode": null,
+                                "name": "Thời gian quan hệ tín dụng toàn diện tại MSB ",
+                                "order": 1,
+                                "results": [
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 289,
+                                                "headerCode": "TC",
+                                                "content": ">= 12 tháng"
+                                            },
+                                            {
+                                                "id": 290,
+                                                "headerCode": "MANUAL",
+                                                "content": "${TIME_QHTD}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 289,
+                                                "type": "text",
+                                                "key": "TIME_QHTD",
+                                                "description": null,
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": 500, \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": false,
+                                "isException": false
+                            },
+                            {
+                                "id": 227,
+                                "code": "Q37",
+                                "parentCode": null,
+                                "name": "KH có nằm trong danh sách theo dõi của phòng CBNRR và Quản lý nợ không",
+                                "order": 2,
+                                "results": [
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 291,
+                                                "headerCode": "TC",
+                                                "content": "Không thuộc danh sách"
+                                            },
+                                            {
+                                                "id": 292,
+                                                "headerCode": "MANUAL",
+                                                "content": "${LIST}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 290,
+                                                "type": "text",
+                                                "key": "LIST",
+                                                "description": null,
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": false,
+                                "isException": false
+                            },
+                            {
+                                "id": 219,
+                                "code": "Q21",
+                                "parentCode": null,
+                                "name": "Lợi nhuận sau thuế năm tài chính gần nhất",
+                                "order": 3,
+                                "results": [
+                                    {
+                                        "type": "DMN",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 10:10:24",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 293,
+                                                "headerCode": "TC",
+                                                "content": "> 0"
+                                            },
+                                            {
+                                                "id": 294,
+                                                "headerCode": "MANUAL",
+                                                "content": "${PROFIT_AFTER_TAX_1}"
+                                            },
+                                            {
+                                                "id": 677,
+                                                "headerCode": "AUTO",
+                                                "content": "${PROFIT_AFTER_TAX} triệu VNĐ"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 291,
+                                                "type": "money",
+                                                "key": "PROFIT_AFTER_TAX",
+                                                "description": null,
+                                                "value": "47058316",
+                                                "validator": "{\"convertRate\": \"1000000\"}"
+                                            },
+                                            {
+                                                "id": 623,
+                                                "type": "text",
+                                                "key": "PROFIT_AFTER_TAX_1",
+                                                "description": null,
+                                                "value": null,
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 293,
+                                                "headerCode": "TC",
+                                                "content": "> 0"
+                                            },
+                                            {
+                                                "id": 294,
+                                                "headerCode": "MANUAL",
+                                                "content": "${PROFIT_AFTER_TAX_1}"
+                                            },
+                                            {
+                                                "id": 677,
+                                                "headerCode": "AUTO",
+                                                "content": "${PROFIT_AFTER_TAX} triệu VNĐ"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 291,
+                                                "type": "money",
+                                                "key": "PROFIT_AFTER_TAX",
+                                                "description": null,
+                                                "value": "0",
+                                                "validator": "{\"convertRate\": \"1000000\"}"
+                                            },
+                                            {
+                                                "id": 623,
+                                                "type": "text",
+                                                "key": "PROFIT_AFTER_TAX_1",
+                                                "description": null,
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": true,
+                                "isException": true
+                            },
+                            {
+                                "id": 225,
+                                "code": "Q34",
+                                "parentCode": null,
+                                "name": "Tốc độ tăng trưởng doanh thu từ hoạt động sản xuất kinh doanh trong 2 năm gần nhất",
+                                "order": 4,
+                                "results": [
+                                    {
+                                        "type": "DMN",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": false,
+                                        "modifiedAt": "22/10/2024 10:10:24",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 295,
+                                                "headerCode": "TC",
+                                                "content": "> 0%"
+                                            },
+                                            {
+                                                "id": 296,
+                                                "headerCode": "MANUAL",
+                                                "content": "${INCREASE_REVENUE}"
+                                            },
+                                            {
+                                                "id": 678,
+                                                "headerCode": "AUTO",
+                                                "content": "${INCREASE_REVENUE}%"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 292,
+                                                "type": "text",
+                                                "key": "INCREASE_REVENUE",
+                                                "description": null,
+                                                "value": "0",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 295,
+                                                "headerCode": "TC",
+                                                "content": "> 0%"
+                                            },
+                                            {
+                                                "id": 296,
+                                                "headerCode": "MANUAL",
+                                                "content": "${INCREASE_REVENUE}"
+                                            },
+                                            {
+                                                "id": 678,
+                                                "headerCode": "AUTO",
+                                                "content": "${INCREASE_REVENUE}%"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 292,
+                                                "type": "text",
+                                                "key": "INCREASE_REVENUE",
+                                                "description": null,
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": true,
+                                "isException": true
+                            },
+                            {
+                                "id": 228,
+                                "code": "Q38",
+                                "parentCode": null,
+                                "name": "BCTC kiểm toán/thuế ",
+                                "order": 5,
+                                "results": [
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 297,
+                                                "headerCode": "TC",
+                                                "content": "BCTC cập nhật năm gần nhất"
+                                            },
+                                            {
+                                                "id": 298,
+                                                "headerCode": "MANUAL",
+                                                "content": "${FINANCIAL_REPORT}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 293,
+                                                "type": "text",
+                                                "key": "FINANCIAL_REPORT",
+                                                "description": null,
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": false,
+                                "isException": false
+                            },
+                            {
+                                "id": 229,
+                                "code": "Q39",
+                                "parentCode": null,
+                                "name": "CIC dư nợ 12 tháng gần nhất và CIC TSBĐ của Doanh nghiệp. Thời điểm lấy CIC cách thời điểm phê duyệt tối đa 01 tháng",
+                                "order": 6,
+                                "results": [
+                                    {
+                                        "type": "DMN",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": false,
+                                        "modifiedAt": "22/10/2024 10:10:24",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 299,
+                                                "headerCode": "TC",
+                                                "content": "Nhóm 1"
+                                            },
+                                            {
+                                                "id": 300,
+                                                "headerCode": "MANUAL",
+                                                "content": "${CIC_DEBIT}"
+                                            },
+                                            {
+                                                "id": 679,
+                                                "headerCode": "AUTO",
+                                                "content": "${CIC_DEBIT}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 294,
+                                                "type": "text",
+                                                "key": "CIC_DEBIT",
+                                                "description": null,
+                                                "value": null,
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 299,
+                                                "headerCode": "TC",
+                                                "content": "Nhóm 1"
+                                            },
+                                            {
+                                                "id": 300,
+                                                "headerCode": "MANUAL",
+                                                "content": "${CIC_DEBIT}"
+                                            },
+                                            {
+                                                "id": 679,
+                                                "headerCode": "AUTO",
+                                                "content": "${CIC_DEBIT}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 294,
+                                                "type": "text",
+                                                "key": "CIC_DEBIT",
+                                                "description": null,
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": true,
+                                "isException": true
+                            },
+                            {
+                                "id": 89,
+                                "code": "Q59",
+                                "parentCode": null,
+                                "name": "Xếp hạng của Khách hàng trên hệ thống chấm điểm của MSB",
+                                "order": 7,
+                                "results": [
+                                    {
+                                        "type": "DMN",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 10:10:24",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 301,
+                                                "headerCode": "TC",
+                                                "content": "A, B hoặc C"
+                                            },
+                                            {
+                                                "id": 302,
+                                                "headerCode": "MANUAL",
+                                                "content": "${RATING}"
+                                            },
+                                            {
+                                                "id": 680,
+                                                "headerCode": "AUTO",
+                                                "content": "${RATING}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 586,
+                                                "type": "text",
+                                                "key": "RATING",
+                                                "description": "Xếp hạng của Khách hàng trên hệ thống chấm điểm của MSB",
+                                                "value": "C",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 301,
+                                                "headerCode": "TC",
+                                                "content": "A, B hoặc C"
+                                            },
+                                            {
+                                                "id": 302,
+                                                "headerCode": "MANUAL",
+                                                "content": "${RATING}"
+                                            },
+                                            {
+                                                "id": 680,
+                                                "headerCode": "AUTO",
+                                                "content": "${RATING}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 586,
+                                                "type": "text",
+                                                "key": "RATING",
+                                                "description": "Xếp hạng của Khách hàng trên hệ thống chấm điểm của MSB",
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": true,
+                                "isException": true
+                            },
+                            {
+                                "id": 81,
+                                "code": "Q20",
+                                "parentCode": null,
+                                "name": "Danh sách phòng, chống rửa tiền của MSB trong từng thời kỳ (AML)",
+                                "order": 8,
+                                "results": [
+                                    {
+                                        "type": "DMN",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 10:10:24",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 303,
+                                                "headerCode": "TC",
+                                                "content": "KH không thuộc phạm vi bị cấm hoặc từ chối thiết lập quan hệ, cung cấp toàn dịch vụ do là đối tượng trong hoặc liên quan đến các danh sách phòng, chống rửa tiền của MSB trong từng thời kỳ."
+                                            },
+                                            {
+                                                "id": 304,
+                                                "headerCode": "MANUAL",
+                                                "content": "${AML}"
+                                            },
+                                            {
+                                                "id": 667,
+                                                "headerCode": "AUTO",
+                                                "content": "${AML}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 296,
+                                                "type": "text",
+                                                "key": "AML",
+                                                "description": null,
+                                                "value": "0",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": true,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 303,
+                                                "headerCode": "TC",
+                                                "content": "KH không thuộc phạm vi bị cấm hoặc từ chối thiết lập quan hệ, cung cấp toàn dịch vụ do là đối tượng trong hoặc liên quan đến các danh sách phòng, chống rửa tiền của MSB trong từng thời kỳ."
+                                            },
+                                            {
+                                                "id": 304,
+                                                "headerCode": "MANUAL",
+                                                "content": "${AML}"
+                                            },
+                                            {
+                                                "id": 667,
+                                                "headerCode": "AUTO",
+                                                "content": "${AML}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 296,
+                                                "type": "text",
+                                                "key": "AML",
+                                                "description": null,
+                                                "value": "1",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": true,
+                                "isException": true
+                            }
+                        ],
+                        "suiteResults": [
+                            {
+                                "type": "USER",
+                                "role": "PD_EB_RM",
+                                "user": "eb_rm",
+                                "result": null,
+                                "modifiedAt": "22/10/2024 14:06:14",
+                                "content": ""
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "domainType": "CUSTOMER-V01-V01.2",
+                "domainObjectId": "9563",
+                "domainObjectName": null,
+                "criteriaSuites": [
+                    {
+                        "suiteCode": "BTC15",
+                        "suiteName": "ĐK KH loại 2_SP tài trợ HĐ đầu ra",
+                        "suiteParentCode": "BTC12",
+                        "suiteParentName": "SP tài trợ HĐ đầu ra",
+                        "criteriaSuiteType": "V003",
+                        "isAutoEvaluate": false,
+                        "criterias": [
+                            {
+                                "id": 89,
+                                "code": "Q59",
+                                "parentCode": null,
+                                "name": "Xếp hạng của Khách hàng trên hệ thống chấm điểm của MSB",
+                                "order": 1,
+                                "results": [
+                                    {
+                                        "type": "DMN",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": false,
+                                        "modifiedAt": "22/10/2024 10:10:24",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 319,
+                                                "headerCode": "TC",
+                                                "content": "A,B,C,D"
+                                            },
+                                            {
+                                                "id": 320,
+                                                "headerCode": "MANUAL",
+                                                "content": "${RATING}"
+                                            },
+                                            {
+                                                "id": 685,
+                                                "headerCode": "AUTO",
+                                                "content": "${RATING}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 591,
+                                                "type": "text",
+                                                "key": "RATING",
+                                                "description": null,
+                                                "value": "C",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": false,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 319,
+                                                "headerCode": "TC",
+                                                "content": "A,B,C,D"
+                                            },
+                                            {
+                                                "id": 320,
+                                                "headerCode": "MANUAL",
+                                                "content": "${RATING}"
+                                            },
+                                            {
+                                                "id": 685,
+                                                "headerCode": "AUTO",
+                                                "content": "${RATING}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 591,
+                                                "type": "text",
+                                                "key": "RATING",
+                                                "description": null,
+                                                "value": "C",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": true,
+                                "isException": true
+                            },
+                            {
+                                "id": 232,
+                                "code": "Q42",
+                                "parentCode": null,
+                                "name": "Khách hàng có kinh nghiệm cung ứng",
+                                "order": 2,
+                                "results": [
+                                    {
+                                        "type": "USER",
+                                        "role": "PD_EB_RM",
+                                        "user": "eb_rm",
+                                        "result": false,
+                                        "modifiedAt": "22/10/2024 14:06:14",
+                                        "additionalInfors": [
+                                            {
+                                                "id": 321,
+                                                "headerCode": "TC",
+                                                "content": "Tối thiểu 2 năm với tối thiểu 03 giao dịch thành công tương tự về quy mô/mặt hàng. (kiểm tra qua sao kê tài khoản, hóa đơn VAT,…)"
+                                            },
+                                            {
+                                                "id": 322,
+                                                "headerCode": "MANUAL",
+                                                "content": "${TEXT}"
+                                            }
+                                        ],
+                                        "params": [
+                                            {
+                                                "id": 305,
+                                                "type": "text",
+                                                "key": "TEXT",
+                                                "description": null,
+                                                "value": "rm",
+                                                "validator": "{\"maxlength\": \"255\", \"minlength\": 1}"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "reasonCode": null,
+                                "groupReasonCode": null,
+                                "description": null,
+                                "isAutoEvaluate": false,
+                                "isException": false
+                            }
+                        ],
+                        "suiteResults": [
+                            {
+                                "type": "USER",
+                                "role": "PD_EB_RM",
+                                "user": "eb_rm",
+                                "result": null,
+                                "modifiedAt": "22/10/2024 14:06:14",
+                                "content": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
